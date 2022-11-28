@@ -26,7 +26,7 @@ usada_para(cuachalalate,'endurecimiento de encias').
 
 usada_para(cuajiote,'estreñimientos cronicos').
 usada_para(cuajiote,'eliminar productos acumulados en los tejidos').
- 
+
 usada_para(cuasia,'curar diabites').
 usada_para(cuasia,'curar artritis').
 usada_para(cuasia,'curar reumatismo').
@@ -181,7 +181,7 @@ cura(anis,calambres).
 cura(tila,calambres).
 cura(manzanilla,calambres).
 cura(ajenjo,calambres).
-cura(diente_de_leon,calculos_biliares).
+cura('diente de leon',calculos_biliares).
 cura(aceite_de_oliva,calculos_biliares).
 cura(retama,calculos_biliares).
 cura(cabellos_de_elote,calculos_renales).
@@ -226,7 +226,7 @@ cura(salvia,corazon).
 cura(nuez_de_kola,corazon).
 cura(tejocote,corazon).
 cura(achicoria,depurativos_de_la_sangre).
-cura(diente_de_leon,depurativos_de_la_sangre).
+cura('diente de leon',depurativos_de_la_sangre).
 cura(apio,depurativos_de_la_sangre).
 cura(sanguinaria,depurativos_de_la_sangre).
 cura(zarzaparrilla,depurativos_de_la_sangre).
@@ -665,7 +665,7 @@ tener_en_casa(linaza).
 tener_en_casa(hamamelis).
 tener_en_casa(zarzaparrilla).
 tener_en_casa(boldo).
-tener_en_casa(diente_de_leon).
+tener_en_casa('diente de leon').
 tener_en_casa(azahar).
 tener_en_casa(malvia).
 tener_en_casa(marrubio).
@@ -683,11 +683,14 @@ forma_preparacion(tintura,'En frasco que pueda taparse con tapon de corcho, se p
 
 
 %funciones
-%colocar unicamente el padecimiento del paciente como parametro de la funcion
-%padecimiento(ulcera,Y,Z)
-padecimiento(X,Y,Z):-cura(Z,X),modo_de_uso(Y,Z).
+%colocar unicamente el padecimiento del paciente como 1er parametro de la funcion
+%malestar(ulcera,Y,Z)
+malestar(X,Y,Z):-cura(Z,X),modo_de_uso(Y,Z).
 
-%Colocar unicamente como parametro el nombre de la planta medicinal.
+%Colocar unicamente como 1er parametro el nombre de la planta medicinal.
 %funcion_de(cuachalalate,Y,Z,W).
 funcion_de(X,Y,Z,W):-usada_para(X,Y),descripcion(X,Z),modo_de_uso(W,X).
 
+%Colocar la planta con la que se cuenta en casita como 1er parametro.
+%planta_almacenada(menta,Y).
+planta_almacenada(X,Y):-tener_en_casa(X),cura(X,Y).
