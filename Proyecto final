@@ -2,6 +2,44 @@
 %S19120195
 %Plantas asignadas (76-80)
 
+origen(aspirina,sauce).
+origen('dolencias del corazón',dedalera).
+origen(morfina,amapola).
+origen(hormonas, barbasco).
+
+%pagina 22
+medicina_provoca('congestion hepatica o renal').
+medicina_provoca('fatiga excesiva').
+medicina_provoca('adiccion').
+medicina_provoca('alergias').
+medicina_provoca('eliminacion de la flora intestinal').
+medicina_provoca('gastritis').
+medicina_provoca('colitis').
+
+%pagina 32
+plantaXmedicamento(digital,'digitalina, tonico cardiaco').
+plantaXmedicamento(opio,'morfina').
+plantaXmedicamento(opio,'codeina').
+plantaXmedicamento(ipeca,'emetina').
+plantaXmedicamento('nuez vomica','estricnina').
+plantaXmedicamento('eleboro blanco','veretrina').
+plantaXmedicamento(colchico,'colquicina').
+plantaXmedicamento(belladona,'atropina').
+plantaXmedicamento(quina,'quinina').
+plantaXmedicamento(cacao,'teobromina').
+plantaXmedicamento(retama,'esparteina').
+plantaXmedicamento(coca,'cocaina').
+plantaXmedicamento(peyote,'mescalina').
+plantaXmedicamento(efedra,'efedrina').
+plantaXmedicamento(barbasco,'hormonas').
+plantaXmedicamento('nenufar amarillo','lutenurina').
+plantaXmedicamento(ñame,'diosponina').
+plantaXmedicamento(artemisa,'tauremisina').
+plantaXmedicamento('semilla de yute','olitorisida').
+plantaXmedicamento(toloache,'aceido lisergico').
+plantaXmedicamento(eucalipto,'eucaliptol').
+plantaXmedicamento(rosal,'vitamina c').
+
 nombre_cientifico('Amphipterygium adstringens',cuachalalate).
 nombre_cientifico('Quassia amara',cuasia).
 nombre_cientifico('bursera norelense',cuajiote).
@@ -55,6 +93,7 @@ usada_para('diente de leon','limpia de urea la sangre').
 produce(aspirina,'hemoragias internas que agravan las ulceras').
 produce(aspirina,'afecta al higado').
 produce(aspirina,'afecta al sistema nervioso').
+produce(penicilina,'provoca transtornos').
 
 %Fin plantas asignadas (76-80)
 
@@ -64,15 +103,6 @@ padre_de_la_medicina('Hipocrates').
 padre_de_la_medicina('Galeno').
 
 
-
-%pagina 22
-provocado_por_medicina('congestion hepatica').
-provocado_por_medicina('congestion renal').
-provocado_por_medicina('fatiga').
-provocado_por_medicina('excesiva').
-provocado_por_medicina('adiccion').
-provocado_por_medicina('alergias').
-
 %pagina 24
 contenido_planta(vitaminas).
 contenido_planta(hormonas).
@@ -80,7 +110,7 @@ contenido_planta(minerales).
 contenido_planta(metaloides).
 contenido_planta(proteinas).
 contenido_planta(oligoelementos).
-contenido_planta(enzinas).
+contenido_planta(enzimas).
 contenido_planta(alcaloides).
 
 % Pagina 162
@@ -681,11 +711,22 @@ forma_preparacion(maceracion,'Triturar la planta y sumergirla en poca agua. Y qu
 forma_preparacion(jarabe,'Hervir la planta en agua 10 minutos., ponerle azucar y que hierva otros 10 min. Ya frio se cuela y se añade 10% alcohol de caña y se envasa para su uso posterior.').
 forma_preparacion(tintura,'En frasco que pueda taparse con tapon de corcho, se pone la planta desmenuzada o triturada y se le echa alcohol de caña, se agita y se le añade agua destilada o de lluvia, 25 gr. por cada 75 gr. de alcohol, y se deja reposar en lo escurito una o dos semanas, agitandolo de vez en cuando. Luego se filtra con algodon o esponja, y listo.').
 
+forma_tomar(cuachalalate,cocimiento).
+forma_tomar(cuajiote,tintura).
+forma_tomar(cuasia,infusion).
+forma_tomar(damiana,cocimiento).
+forma_tomar('diente de leon',cocimiento).
+forma_tomar('diente de leon',maceracion).
+
+%como_usar(cuachalalate,Y,Z,V).
+%como_usar('diente de leon',Y,Z,V).
+como_usar(X,Y,Z,V):-forma_tomar(X,Y),forma_preparacion(Y,Z),modo_de_uso(V,X).
 
 %funciones
 %colocar unicamente el padecimiento del paciente como 1er parametro de la funcion
-%malestar(ulcera,Y,Z)
-malestar(X,Y,Z):-cura(Z,X),modo_de_uso(Y,Z).
+%malestar(ulcera,Y,Z).
+%malestar(diabetes,Y,Z,V).
+malestar(X,Y,Z,V):-cura(Z,X),modo_de_uso(Y,Z),nombre_cientifico(V,Z).
 
 %Colocar unicamente como 1er parametro el nombre de la planta medicinal.
 %funcion_de(cuachalalate,Y,Z,W).
@@ -694,3 +735,8 @@ funcion_de(X,Y,Z,W):-usada_para(X,Y),descripcion(X,Z),modo_de_uso(W,X).
 %Colocar la planta con la que se cuenta en casita como 1er parametro.
 %planta_almacenada(menta,Y).
 planta_almacenada(X,Y):-tener_en_casa(X),cura(X,Y).
+
+
+%funcion para decidir si tomar medicamento o plantita rica rica
+%queTomar(diabetes,Y,Z).
+queTomar(X,Y,Z):-cura(Y,X),plantaXmedicamento(Y,Z).
