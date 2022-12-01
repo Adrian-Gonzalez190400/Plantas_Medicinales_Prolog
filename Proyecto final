@@ -69,7 +69,7 @@ usada_para(cuasia,'curar diabites').
 usada_para(cuasia,'curar artritis').
 usada_para(cuasia,'curar reumatismo').
 usada_para(cuasia,'curar dolores de cuerpo').
-usada_para(cuasia,'curar migraña').
+usada_para(cuasia,'migraña').
 usada_para(cuasia,'curar dolor de estomago').
 usada_para(cuasia,'expulsar bichos').
 
@@ -94,6 +94,37 @@ produce(aspirina,'hemoragias internas que agravan las ulceras').
 produce(aspirina,'afecta al higado').
 produce(aspirina,'afecta al sistema nervioso').
 produce(penicilina,'provoca transtornos').
+
+
+%%%%%%%%%%%%%%%%%% Efectos de las plantas %%%%%%%%%%%%%%%%
+efectosPlantasOrganismo(afrodisiaca,'que excita el apetito secual').
+efectosPlantasOrganismo(analgesica,'que quita o modera el dolor').
+efectosPlantasOrganismo(anestesica,'que insesibiliza el cuerpo o una parte').
+efectosPlantasOrganismo(antidiarreica,'qye controla diarreas o deposiciones').
+efectosPlantasOrganismo(antiespasmodica,'que controla espasmos nerviosos').
+efectosPlantasOrganismo(antiflogistica,'que actua contra las inflamaciones').
+efectosPlantasOrganismo(antipiretica,'que quita o disminue la fiebre').
+efectosPlantasOrganismo(antiseptica,'que mata los tejidos').
+efectosPlantasOrganismo(aperitiva,'que produce apetito (deseo de comer)').
+efectosPlantasOrganismo(carminativa,'que hace contraer los tejidos').
+efectosPlantasOrganismo(colagoga,'que evita la formacion de gases o provoca su expulsion (fuchila)').
+efectosPlantasOrganismo(depurativa,'que ayuda a expulsar la bilis').
+efectosPlantasOrganismo(diaforetica,'que provoca sudar como cochino').
+efectosPlantasOrganismo(digestiva,'que favorece la digestion').
+efectosPlantasOrganismo(diuretica,'que provoca la orina').
+efectosPlantasOrganismo(emetica,'que provoca nauseas y vomitos').
+efectosPlantasOrganismo(emenagoga,'que activa la menstruacion').
+efectosPlantasOrganismo(estupefaciente,'que aquieta, duerme o atonta').
+efectosPlantasOrganismo(expectorante,'que expulsa flemas y mucosidades').
+efectosPlantasOrganismo(hemostatica,'que corta o detiene hemorragias').
+efectosPlantasOrganismo(hepatica,'que ayuda al higado').
+efectosPlantasOrganismo(laxante,'que purga sin provocar diarrea').
+efectosPlantasOrganismo(pectoral,'que ayuda al pecho').
+efectosPlantasOrganismo(sedante,'que calma dolores intestinales').
+efectosPlantasOrganismo(tonica,'que da fuerza al organismo (no al orgasmo)').
+efectosPlantasOrganismo(toxica,'que es venenosa').
+efectosPlantasOrganismo(vermifuga,'que expulsa gusanos intestinales').
+efectosPlantasOrganismo(vulneraria,'que cura llagas y heridas').
 
 %Fin plantas asignadas (76-80)
 
@@ -718,13 +749,16 @@ forma_tomar(damiana,cocimiento).
 forma_tomar('diente de leon',cocimiento).
 forma_tomar('diente de leon',maceracion).
 
+
+
+%funciones
+
 %como_usar(cuachalalate,Y,Z,V).
 %como_usar('diente de leon',Y,Z,V).
 como_usar(X,Y,Z,V):-forma_tomar(X,Y),forma_preparacion(Y,Z),modo_de_uso(V,X).
 
-%funciones
 %colocar unicamente el padecimiento del paciente como 1er parametro de la funcion
-%malestar(ulcera,Y,Z).
+%malestar(ulcera,Y,Z,V).
 %malestar(diabetes,Y,Z,V).
 malestar(X,Y,Z,V):-cura(Z,X),modo_de_uso(Y,Z),nombre_cientifico(V,Z).
 
@@ -736,7 +770,9 @@ funcion_de(X,Y,Z,W):-usada_para(X,Y),descripcion(X,Z),modo_de_uso(W,X).
 %planta_almacenada(menta,Y).
 planta_almacenada(X,Y):-tener_en_casa(X),cura(X,Y).
 
-
 %funcion para decidir si tomar medicamento o plantita rica rica
 %queTomar(diabetes,Y,Z).
 queTomar(X,Y,Z):-cura(Y,X),plantaXmedicamento(Y,Z).
+
+%curaMedicamento('eucaliptol',Y,Z).
+curaMedicamento(X,Y,Z):-plantaXmedicamento(Y,X),cura(Y,Z).
